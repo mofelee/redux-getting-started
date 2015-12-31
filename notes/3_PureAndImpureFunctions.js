@@ -1,8 +1,9 @@
-// Pure functions
+// PURE AND IMPURE FUNCTIONS
+
+// Pure functions:
 // return value depends solely on the values of their arguments
-// do not have any observable side-effects such as
-// network requests or database calls
-// same input, same output
+// do not have any observable side-effects such as network
+// requests or database calls. same input, same output.
 function square(x){
   return x * x;
 }
