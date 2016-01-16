@@ -1,4 +1,4 @@
-// TOGGLING A TODO
+// ADDING A KEYDOWN LISTENER 
 import expect from 'expect';
 import deepFreeze from 'deep-freeze';
 import { createStore, combineReducers } from 'redux';
@@ -104,25 +104,48 @@ const getVisibleTodos = (
 let nextTodoId = 0;
 // declare TodoApp component
 class TodoApp extends React.Component{
+  // CONSTRUCTOR
   constructor(props){
     super(props);
     this.addTodo = this.addTodo.bind(this);
   }
-  addTodo = () => {
+  // LIFECYCLE METHODS
+  componentDidMount(){
+    // arrow function preserves this context
+    // otherwise we'd have to do
+    // this.handleKeyDown.bind(this)
+    document.addEventListener(
+      'keydown',
+      (e) => this.handleKeyDown(e)
+    );
+  }
+  componentWillUnmount(){
+    document.removeEventListener(
+      'keydown',
+      (e) => this.handleKeyDown(e)
+    );
+  }
+  // METHODS
+  handleKeyDown(e){
+    const ENTER = 13;
+    if (e.keyCode === ENTER){
+      this.addTodo();
+    }
+  }
+  addTodo(){
+    const todoInput = document.getElementById('todoInput');
     store.dispatch({
       type: 'ADD_TODO',
-      text: this.input.value,
+      text: todoInput.value,
       id: nextTodoId++
     });
-    document.getElementById('addTodoBtn').value = '';
+    todoInput.value = '';
   }
+  // RENDER
   render(){
-    window.onkeydown((e) => {
-      console.log(e.value);
-    });
     const {
       todos,
-      addTodos,
+      addTodo,
       visibilityFilter
     } = this.props;
     const visibleTodos = getVisibleTodos(
@@ -131,12 +154,10 @@ class TodoApp extends React.Component{
     );
     return(
       <div>
-        <input ref={node => {
+        <input id='todoInput' ref={node => {
           this.input = node;
         }} />
-        <button id='addTodoBtn' onClick={addTodo);
-            this.input.value = '';
-          }}>
+        <button onClick={this.addTodo}>
           Add Todo
         </button>
         <ul>
