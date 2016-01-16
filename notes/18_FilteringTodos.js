@@ -104,9 +104,25 @@ const getVisibleTodos = (
 let nextTodoId = 0;
 // declare TodoApp component
 class TodoApp extends React.Component{
+  constructor(props){
+    super(props);
+    this.addTodo = this.addTodo.bind(this);
+  }
+  addTodo = () => {
+    store.dispatch({
+      type: 'ADD_TODO',
+      text: this.input.value,
+      id: nextTodoId++
+    });
+    document.getElementById('addTodoBtn').value = '';
+  }
   render(){
+    window.onkeydown((e) => {
+      console.log(e.value);
+    });
     const {
       todos,
+      addTodos,
       visibilityFilter
     } = this.props;
     const visibleTodos = getVisibleTodos(
@@ -118,14 +134,7 @@ class TodoApp extends React.Component{
         <input ref={node => {
           this.input = node;
         }} />
-        <button onClick={() => {
-          {/* compenent expresses desire to mutate the state by
-          dispatching an action */}
-            store.dispatch({
-              type: 'ADD_TODO',
-              text: this.input.value,
-              id: nextTodoId++
-            });
+        <button id='addTodoBtn' onClick={addTodo);
             this.input.value = '';
           }}>
           Add Todo
