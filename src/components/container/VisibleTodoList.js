@@ -1,6 +1,7 @@
 import React from 'react';
 import TodoList from '../presentational/TodoList';
 import getVisibleTodos from '../../helpers/getVisibleTodos';
+import toggleTodo from '../../actions/toggleTodo';
 
 // maps the redux store state
 // to the props of the TodoList
@@ -24,10 +25,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onTodoClick: (id) => {
-      dispatch({
-        type: 'TOGGLE_TODO',
-        id
-      });
+      dispatch(toggleTodo(id));
     }
   };
 };

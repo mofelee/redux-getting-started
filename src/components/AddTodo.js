@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import addTodo from '../actions/addTodo';
 
 class AddTodo extends React.Component{
   constructor(){
@@ -18,14 +19,10 @@ class AddTodo extends React.Component{
     );
   }
   addTodo(){
-    const { dispatch, todoId } = this.props;
-    const todoInput = document.getElementById('todoInput');
-    dispatch({
-      type: 'ADD_TODO',
-      id: todoId,
-      text: todoInput.value
-    });
-    todoInput.value = '';
+    const { dispatch } = this.props;
+    const input = document.getElementById('todoInput');
+    dispatch(addTodo(input.value));
+    input.value = '';
   }
   handleKeyDown(e){
     const ENTER = 13;
@@ -35,7 +32,7 @@ class AddTodo extends React.Component{
   }
   render(){
     let input;
-    const { dispatch, todoId } = this.props;
+    const { dispatch } = this.props;
 
     return(
       <div>
@@ -43,11 +40,7 @@ class AddTodo extends React.Component{
         input = node;
       }} />
       <button onClick={() => {
-        dispatch({
-          type: 'ADD_TODO',
-          id: todoId,
-          text: input.value
-        })
+        dispatch(addTodo(input.value));
         input.value = '';
       }}>
       Add Todo
@@ -57,15 +50,6 @@ class AddTodo extends React.Component{
   }
 }
 
-AddTodo = connect(
-  state => {
-    return {
-      todoId: state.todos.length
-    };
-  },
-  // null or falsy second argument
-  // gets dispatch as a prop
-  null
-)(AddTodo);
+AddTodo = connect()(AddTodo);
 
 export default AddTodo;
