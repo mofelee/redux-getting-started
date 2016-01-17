@@ -7,7 +7,7 @@ import Todo from '../presentational/Todo';
 import TodoList from '../presentational/TodoList';
 import Footer from '../presentational/Footer';
 
-import AddTodo from '../AddTodo';
+import AddTodo from '../presentational/AddTodo';
 
 let nextTodoId = 0;
 
@@ -69,15 +69,7 @@ class TodoApp extends React.Component{
           })
         }
       />
-      <Footer
-        visibilityFilter={visibilityFilter}
-        onFilterClick={filter =>
-          store.dispatch({
-            type: 'SET_VISIBILITY_FILTER',
-            filter
-          })
-        }
-      />
+      <Footer />
       </div>
     );
   }
