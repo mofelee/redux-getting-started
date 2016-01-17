@@ -11,19 +11,20 @@ import AddTodo from '../AddTodo';
 // NOTE diverging from Dan here because I want
 // to maintain my keydown listener
 class TodoApp extends React.Component{
-  constructor(props){
-    super(props);
-  }
   render(){
-    const { store, todos, visibilityFilter } = this.props;
+    const { todos, visibilityFilter } = this.props;
     return(
       <div>
-        <AddTodo store={store}/>
-        <VisibleTodoList store={store}/>
-        <Footer store={store}/>
+        <AddTodo />
+        <VisibleTodoList />
+        <Footer />
       </div>
     );
   }
+};
+
+TodoApp.contextTypes = {
+  store: React.PropTypes.object
 };
 
 export default TodoApp;

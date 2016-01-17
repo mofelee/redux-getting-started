@@ -5,7 +5,7 @@ class AddTodo extends React.Component{
     super();
   }
   componentDidMount(){
-    const { store } = this.props;
+    const { store } = this.context;
     const state = store.getState();
     this.nextTodoId = state.todos.length;
     this.unsubscribe = store.subscribe(() =>
@@ -24,12 +24,12 @@ class AddTodo extends React.Component{
     );
   }
   componentDidUpdate(){
-    const { store } = this.props;
+    const { store } = this.context;
     const state = store.getState();
     this.nextTodoId = state.todos.length;
   }
   addTodo(){
-    const { store } = this.props;
+    const { store } = this.context;
     const state = store.getState();
     const todoInput = document.getElementById('todoInput');
     store.dispatch({
@@ -46,7 +46,7 @@ class AddTodo extends React.Component{
     }
   }
   render(){
-    const { store } = this.props;
+    const { store } = this.context;
     const state = store.getState();
     let input;
 
@@ -69,5 +69,9 @@ class AddTodo extends React.Component{
     );
   }
 }
+
+AddTodo.contextTypes = {
+  store: React.PropTypes.object
+};
 
 export default AddTodo;
