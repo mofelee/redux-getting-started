@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from '../presentational/Link';
-import store from '../../store/store';
 
 // CONTAINER: provides data and behavior for
 // the presentational components (Link)
@@ -10,6 +9,7 @@ class FilterLink extends React.Component{
     // to the lifecycle methods, here we can
     // check whether our relevant state has updated
     // before re-rendering
+    const { store } = this.props;
     this.unsubscribe = store.subscribe(() =>
       this.forceUpdate()
     );
@@ -18,6 +18,7 @@ class FilterLink extends React.Component{
     this.unsubscribe();
   }
   render(){
+    const { store } = this.props;
     // it reads but is not subscribed
     const state = store.getState();
 

@@ -1,11 +1,11 @@
 import React from 'react';
-import store from '../store/store';
 
 class AddTodo extends React.Component{
   constructor(){
     super();
   }
   componentDidMount(){
+    const { store } = this.props;
     const state = store.getState();
     this.nextTodoId = state.todos.length;
     this.unsubscribe = store.subscribe(() =>
@@ -24,10 +24,12 @@ class AddTodo extends React.Component{
     );
   }
   componentDidUpdate(){
+    const { store } = this.props;
     const state = store.getState();
     this.nextTodoId = state.todos.length;
   }
   addTodo(){
+    const { store } = this.props;
     const state = store.getState();
     const todoInput = document.getElementById('todoInput');
     store.dispatch({
@@ -44,6 +46,7 @@ class AddTodo extends React.Component{
     }
   }
   render(){
+    const { store } = this.props;
     const state = store.getState();
     let input;
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import getVisibleTodos from '../../helpers/getVisibleTodos';
-import store from '../../store/store';
 
 // PRESENTATIONAL COMPONENTS
 import Todo from '../presentational/Todo';
@@ -16,12 +15,12 @@ class TodoApp extends React.Component{
     super(props);
   }
   render(){
-    const { todos, visibilityFilter } = this.props;
+    const { store, todos, visibilityFilter } = this.props;
     return(
       <div>
-        <AddTodo />
-        <VisibleTodoList />
-        <Footer />
+        <AddTodo store={store}/>
+        <VisibleTodoList store={store}/>
+        <Footer store={store}/>
       </div>
     );
   }

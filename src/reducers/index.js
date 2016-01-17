@@ -3,9 +3,9 @@ import todos from './todos';
 import visibilityFilter from './visibilityFilter'
 
 // root reducer
-const todoApp = combineReducers({
+const rootReducer = combineReducers({
   todos,
   visibilityFilter
 });
 
-export default todoApp;
+export default rootReducer;
