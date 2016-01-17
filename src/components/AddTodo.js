@@ -1,40 +1,28 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 class AddTodo extends React.Component{
   constructor(){
     super();
   }
   componentDidMount(){
-    const { store } = this.context;
-    const state = store.getState();
-    this.nextTodoId = state.todos.length;
-    this.unsubscribe = store.subscribe(() =>
-      this.forceUpdate()
-    );
     document.addEventListener(
       'keydown',
       (e) => this.handleKeyDown(e)
     );
   }
   componentWillUnmount(){
-    this.unsubscribe();
     document.removeEventListener(
       'keydown',
       (e) => this.handleKeyDown(e)
     );
   }
-  componentDidUpdate(){
-    const { store } = this.context;
-    const state = store.getState();
-    this.nextTodoId = state.todos.length;
-  }
   addTodo(){
-    const { store } = this.context;
-    const state = store.getState();
+    const { dispatch, todoId } = this.props;
     const todoInput = document.getElementById('todoInput');
-    store.dispatch({
+    dispatch({
       type: 'ADD_TODO',
-      id: this.nextTodoId,
+      id: todoId,
       text: todoInput.value
     });
     todoInput.value = '';
@@ -46,9 +34,8 @@ class AddTodo extends React.Component{
     }
   }
   render(){
-    const { store } = this.context;
-    const state = store.getState();
     let input;
+    const { dispatch, todoId } = this.props;
 
     return(
       <div>
@@ -56,9 +43,9 @@ class AddTodo extends React.Component{
         input = node;
       }} />
       <button onClick={() => {
-        store.dispatch({
+        dispatch({
           type: 'ADD_TODO',
-          id: this.nextTodoId,
+          id: todoId,
           text: input.value
         })
         input.value = '';
@@ -70,8 +57,15 @@ class AddTodo extends React.Component{
   }
 }
 
-AddTodo.contextTypes = {
-  store: React.PropTypes.object
-};
+AddTodo = connect(
+  state => {
+    return {
+      todoId: state.todos.length
+    };
+  },
+  // null or falsy second argument
+  // gets dispatch as a prop
+  null
+)(AddTodo);
 
 export default AddTodo;
